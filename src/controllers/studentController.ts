@@ -6,7 +6,7 @@ import Submission from "../models/Submission";
 async function getPendingAssignments(req: Request, res: Response) {
 
     try {
-        const studentId = req.query.studentId;
+        const studentId = req.query.studentId;  // Ideally get this from middleware
 
         if (!studentId) {
             return res.status(411).json({
