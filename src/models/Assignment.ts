@@ -22,6 +22,10 @@ const assignmentSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    totalQuestions: {
+        type: Number,
+        required: true,
+    },
     questions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question',

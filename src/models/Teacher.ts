@@ -23,8 +23,13 @@ const teacherSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Student',
         }
+    ],
+    assignments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Assignment',
+        }
     ]
-
 }, {
     timestamps: true
 });
