@@ -71,6 +71,7 @@ def restart():
 
 # Generator function to process frames from the webcam
 def gen_frames():
+    print("main.py frame is running")
     global both_hands_detected, ans, finger_touched, counter, random_number1, random_number2, rand_operator, result
     while True:
         success, frame = camera.read()
@@ -93,7 +94,7 @@ def gen_frames():
 
                 if len(results.multi_hand_landmarks) >= 2:
                     ans += 1
-                    print(ans)
+                    # print(ans)
                     if ans == 50:
                         both_hands_detected = True
 

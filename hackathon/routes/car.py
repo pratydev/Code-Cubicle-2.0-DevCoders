@@ -1,79 +1,50 @@
-import random
 import cv2
 import mediapipe as mp
-from flask import Blueprint, render_template, jsonify, Response
-
-# from app import camera
+from flask import Blueprint, render_template, jsonify, Response, request
 
 gestureCarGame_bp = Blueprint('gestureCarGame', __name__)
 
 camera = cv2.VideoCapture(0)
 
-
 # Initialize MediaPipe Hands module
 mp_hands = mp.solutions.hands
-hands = mp_hands.Hands()
+hands = mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 mp_drawing = mp.solutions.drawing_utils
 
 # Initialize variables
-rand_operator = "+"
-random_number1 = random.randint(0, 9)
-random_number2 = random.randint(0, 9)
-random_number3 = random.randint(1, 3)
-both_hands_detected = False
-ans = 0
-finger_touched = False
-counter = 0
-result = False
-THRESHOLD_DISTANCE = 0.05
+left_hand = False
+right_hand = False
 
 
 # Functions to manipulate global variables
-def increment_counter():
-    global counter
-    counter += 1
-    print(counter)
+def left_hand_info():
+    global left_hand, right_hand
+    left_hand = True
+    right_hand = False
+    print("Left hand detected")
 
 
-def decrement_counter():
-    global counter
-    counter -= 1
-    print(counter)
-
-
-def make_true():
-    global both_hands_detected
-    both_hands_detected = True
-    print("both hands are :" + both_hands_detected)
-
-
-def make_false():
-    global both_hands_detected
-    both_hands_detected = False
+def right_hand_info():
+    global left_hand, right_hand
+    left_hand = False
+    right_hand = True
+    print("Right hand detected")
 
 
 def restart():
-    global both_hands_detected, ans, finger_touched, counter, random_number1, random_number2, rand_operator, result
-    both_hands_detected = False
-    ans = 0
-    finger_touched = False
-    counter = 0
-    random_number1 = random.randint(1, 6)
-    random_number2 = random.randint(1, 6)
-    random_number3 = random.randint(1, 2)
-    if random_number3 == 1:
-        rand_operator = "+"
-    elif random_number3 == 2:
-        rand_operator = "-"
-    elif random_number3 == 3:
-        rand_operator = "*"
+    global left_hand, right_hand
+    left_hand = False
+    right_hand = False
+    print("Hand states reset")
 
 
 # Generator function to process frames from the webcam
 def gen_frames():
-    global both_hands_detected, ans, finger_touched, counter, random_number1, random_number2, rand_operator, result
+    print("Car video feed is running")
+    global right_hand, left_hand
     while True:
         success, frame = camera.read()
+
         if not success:
             return jsonify({'error': 'Error reading frame'})
 
@@ -87,35 +58,18 @@ def gen_frames():
                     0].label
                 mp_drawing.draw_landmarks(frame, landmarks, mp_hands.HAND_CONNECTIONS)
 
-                index_tip = landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
-                thumb_tip = landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
-                distance = ((index_tip.x - thumb_tip.x) ** 2 + (index_tip.y - thumb_tip.y) ** 2) ** 0.5
-
-                if len(results.multi_hand_landmarks) >= 2:
-                    ans += 1
-                    print(ans)
-                    if ans == 50:
-                        both_hands_detected = True
-
-                elif handedness == "Right":
-                    ans = 0
-                    if distance < THRESHOLD_DISTANCE:
-                        if not finger_touched:
-                            increment_counter()
-                            finger_touched = True
-                    else:
-                        finger_touched = False
+                if handedness == "Right":
+                    right_hand = True
+                    left_hand = False
+                    # right_hand_info()
                 elif handedness == "Left":
-                    ans = 0
-                    if distance < THRESHOLD_DISTANCE:
-                        if not finger_touched:
-                            decrement_counter()
-                            finger_touched = True
-                    else:
-                        finger_touched = False
+                    print("it is left hand -------------------- ")
+                    right_hand = False
+                    left_hand = True
 
-        if both_hands_detected:
-            break
+                    print(left_hand, "=======================")
+                    # left_hand_info()
+                # restart()
 
         ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 30])
         frame = buffer.tobytes()
@@ -130,24 +84,26 @@ def game():
     return render_template('/game/gestureCarGame.html')
 
 
-@gestureCarGame_bp.route('/video_feed')
+@gestureCarGame_bp.route('/api/car/video_feed')
 def car_video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@gestureCarGame_bp.route('/get_count')
-def get_count():
-    return jsonify({'count': counter})
-
-
-@gestureCarGame_bp.route('/get_numbers')
-def get_numbers():
-    print(both_hands_detected)
+@gestureCarGame_bp.route('/api/get_hands')
+def get_hands():
+    print("Left hand state:", left_hand)
+    print("Right hand state:", right_hand)
     return jsonify({
-        'random_number1': random_number1,
-        'random_number2': random_number2,
-        'rand_operator': rand_operator,
-        'both_hands_detected': both_hands_detected,
-        'count': counter
+        'left_hand': left_hand,
+        'right_hand': right_hand
     })
 
+
+@gestureCarGame_bp.route('/api/set_hands', methods=['POST'])  # Ensure POST method for setting data
+def set_hands():
+    global left_hand, right_hand
+    data = request.get_json()
+    print("Received data:", data)
+    left_hand = data.get('left_hand', False)
+    right_hand = data.get('right_hand', False)
+    return jsonify({"message": "Data received successfully"})
