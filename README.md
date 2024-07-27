@@ -40,3 +40,9 @@ The architecture of our solution involves:
 - Incorporate additional subjects and languages to broaden educational coverage.
 - Integrate with government tab distribution programs for enhanced accessibility.
 - Develop tools for parental engagement to support children's learning journeys.
+
+## Contributed by :
+- Aditi Sharma
+- Jatin Ahirwar
+- Komal
+- Pratyush Gaur.
