@@ -7,7 +7,6 @@ const assignmentSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true,
     },
     subject :{
         type: String,

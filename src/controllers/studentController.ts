@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { SubmissionBody, submissionSchema } from "../config/types";
 import Assignment from "../models/Assignment";
 import Submission from "../models/Submission";
+import Score from "../models/Score";
+
 async function getPendingAssignments(req: Request, res: Response) {
 
     try {
@@ -52,7 +54,7 @@ async function getCompletedAssignments(req: Request, res: Response) {
 
         return res.status(200).json({
             message: "Pending Assignments fetched successfully",
-            pendingAssignments: student.pendingAssignments
+            pendingAssignments: student.completedAssignments
         });
     } catch (error) {
         return res.status(500).json({
@@ -73,13 +75,16 @@ async function submitAssignment(req: Request, res: Response) {
 
         const submissionBody: SubmissionBody = req.body;
 
-        const assignment = await Assignment.findById(submissionBody.assignmentId).populate('teacher');
+        const assignment = await Assignment.findById(submissionBody.assignmentId);
 
         if (!assignment) {
             return res.status(404).json({
                 message: "Assignment not found"
             });
         }
+
+        await assignment.populate('questions');
+
 
         const question = assignment.questions.find((question) => question._id.toString() === submissionBody.questionId);
         if (!question) {
@@ -109,6 +114,34 @@ async function submitAssignment(req: Request, res: Response) {
                 message: "You have already submitted this assignment"
             });
         }
+
+        const existingScore = await Score.findOne({
+            student: studentId,
+            'scores.assignment': submissionBody.assignmentId
+        });
+
+        if (existingScore) {
+            // @ts-ignore
+            const assignmentIndex = existingScore.scores.findIndex((score) => score.assignment.toString() === submissionBody.assignmentId);
+            if (assignmentIndex !== -1) {
+                // @ts-ignore
+                existingScore.scores[assignmentIndex].score += question.marks;
+            }
+            existingScore.save();
+        } else {
+            const updatedScore = await Score.findOneAndUpdate({
+                student: studentId
+            }, {
+                $addToSet: {
+                    scores: {
+                        assignment: submissionBody.assignmentId,
+                        // @ts-ignore
+                        score: question.marks
+                    }
+                }
+            }, {new: true});
+        }
+
 
         const submission = await Submission.create({
             student: studentId,

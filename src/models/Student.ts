@@ -31,7 +31,7 @@ const studentSchema = new mongoose.Schema({
             ref: 'Assignment',
         }
     ]
-},{
+}, {
     timestamps: true
 });
 
