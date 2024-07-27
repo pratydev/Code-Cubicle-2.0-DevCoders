@@ -45,4 +45,4 @@ The architecture of our solution involves:
 - Aditi Sharma
 - Jatin Ahirwar
 - Komal
-- Pratyush Gaur.
+- Pratyush Gaur
