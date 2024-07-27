@@ -1,0 +1,215 @@
+/* Existing styles */
+
+main {
+    height: 100vh;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.main-content {
+    margin-left: 270px;
+    /* Adjust based on sidebar width */
+    padding: 20px;
+}
+
+.assignments-section {
+    margin-bottom: 20px;
+}
+
+.assignments-section h3 {
+    padding-left: 40px;
+    margin-left: -50px;
+    margin-bottom: 10px;
+    border: 2px solid red;
+    border-radius: 2rem;
+}
+
+.assignments-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.assignments-section ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.assignments-section ul li:hover {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgb(21, 21, 21);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.container {
+    border: 2px solid red;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.story-board {
+    width: 328px;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    border-radius: 20px;
+    padding: 0 0;
+    padding: 32px 28px 64px;
+}
+
+/* Typography settings */
+
+html,
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga", "kern";
+    font-variant-numeric: proportional-nums;
+    overflow-x: hidden;
+}
+
+.card {
+    /* width: 328px; */
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    border-radius: 20px;
+    padding: 0 0;
+    /* padding: 32px 28px 64px; */
+}
+
+/* Scroll bar */
+
+.section-team::-webkit-scrollbar-thumb {
+    background: #FFFFFF;
+    border-radius: 80px;
+}
+
+.section-team::-webkit-scrollbar {
+    height: 6px;
+}
+
+/* Border gradient */
+
+.button-home,
+.button-home--services {
+    position: relative;
+    padding: 17px 34px;
+}
+
+.button-home--contact {
+    position: relative;
+    padding: 9px 18px;
+}
+
+.button-home::before,
+.button-home--contact::before,
+.button-home--services::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: linear-gradient(90deg, #FE00AE, #8E39C5) border-box;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+
+.button-home--contact::before {
+    border-radius: 8px;
+}
+
+.modal {
+    display: none;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Style for the overlay */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    z-index: 999;
+    /* Ensure the overlay is on top of other content */
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    backdrop-filter: blur(100px);
+    background-image: radial-gradient(circle, rgba(30, 4, 163, 0.2), rgba(23, 6, 109, 0.644));
+    padding: 2rem 1rem;
+    border-radius: 2rem;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid white;
+}
+
+.card-help-game {
+    width: 60vw;
+    height: 70vh;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.side-blur {
+    top: 0;
+    /* border: 2px solid red; */
+    border-radius: 0 2rem 2rem 0;
+    width: 300px;
+    height: 100%;
+    -webkit-backdrop-filter: blur(150px);
+    backdrop-filter: blur(50px);
+    
+    /* background-image: linear-gradient(to left, rgba(39, 0, 232, 0.864), rgba(123, 97, 255, 0.996)); */
+    background-image: linear-gradient(to left, rgb(53, 36, 121), rgb(0, 0, 0));
+
+    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.986) 0%, rgba(0, 0, 0, 0) 100%);
+    position: absolute;
+    right: 0;
+    z-index: 1;
+}
+
+.swiper-slide p{
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+    z-index: 9;
+}
+
