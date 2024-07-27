@@ -21,6 +21,7 @@ The architecture of our solution involves:
 1. Generating random numbers and operators for calculations.
 2. Capturing and processing hand gestures using MediaPipe's hand tracking.
 3. Displaying the results of the calculations interactively.
+4. Making MindFusion Interface for improving general English and Science. 
 
 ## Tech Stack
 - **Python**
