@@ -1,6 +1,6 @@
 import Student from "../models/Student";
 import { Request, Response } from "express";
-import { SubmissionBody, submissionSchema } from "../config/types";
+import { SubmissionBody, submissionSchema } from "../utils/types";
 import Assignment from "../models/Assignment";
 import Submission from "../models/Submission";
 import Score from "../models/Score";

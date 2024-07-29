@@ -1,13 +1,18 @@
 import { Router } from "express";
-import { getAssignments, createAssignment, getStudents } from "../controllers/teacherController";
+import { getAssignments, createAssignment, getStudents, signInTeacher, signUpTeacher } from "../controllers/teacherController";
+import teacherMiddleware from "../config/teacherMiddleware";
 
 const router = Router();
 
-router.get('/assignments', getAssignments);
+router.post('/sign-up', teacherMiddleware, signUpTeacher);
 
-router.get("/students", getStudents);
+router.post('sign-in', teacherMiddleware, signInTeacher);
 
-router.post("/create-assignment", createAssignment);
+router.get('/assignments', teacherMiddleware, getAssignments);
+
+router.get('/students', teacherMiddleware, getStudents);
+
+router.post('/create-assignment', teacherMiddleware, createAssignment);
 
 
 export default router;

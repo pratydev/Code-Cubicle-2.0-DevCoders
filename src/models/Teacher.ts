@@ -14,9 +14,10 @@ const teacherSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    subject: {
+    phoneNumber: {
         type: String,
         required: true,
+        unique: true
     },
     students: [
         {
