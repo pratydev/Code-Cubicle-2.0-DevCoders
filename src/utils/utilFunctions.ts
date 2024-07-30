@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { TeacherBody } from "./types";
+import { StudentBody, TeacherBody } from "./types";
 
 function generateTeacherToken(payload: TeacherBody): string {
     const teacherSecret = process.env.CODEIAL_TEACHER_JWT_SECRET;
@@ -11,7 +11,7 @@ function generateTeacherToken(payload: TeacherBody): string {
     });
 }
 
-function generateStudentToken(payload: TeacherBody): string {
+function generateStudentToken(payload: StudentBody): string {
     const studentSecret = process.env.CODEIAL_JWT_SECRET;
     if(!studentSecret){
         throw new Error("Teacher Token Not Set");

@@ -34,6 +34,18 @@ export const teacherSignUpSchema = zod.object({
     phoneNumber: zod.string().min(10, { message: "Phone number must be at least 10 characters long" }).max(13, { message: "Phone number must be at most 13 characters long" })
 });
 
+export const studentSignInSchema = zod.object({
+    email: zod.string().email({ message: "Invalid email" }),
+    password: zod.string().min(8, { message: "Password must be at least 8 characters long" }),
+});
+
+export const studentSignUpSchema = zod.object({
+    name: zod.string().min(3, { message: "Name must be at least 3 characters long" }).max(40, { message: "Name must be at most 40 characters long" }),
+    email: zod.string().email({ message: "Invalid email" }),
+    password: zod.string().min(8, { message: "Password must be at least 8 characters long" }),
+    class: zod.string()
+});
+
 
 
 //TYPES
@@ -45,6 +57,10 @@ export type SubmissionBody = zod.infer<typeof submissionSchema>;
 
 export type TeacherSignUpBody = zod.infer<typeof teacherSignUpSchema>;
 
+export type StudentSignInBody = zod.infer<typeof studentSignInSchema>;
+
+export type StudentSignUpBody = zod.infer<typeof studentSignUpSchema>;
+
 
 
 //INTERFACES
@@ -53,4 +69,11 @@ export interface TeacherBody {
     name: string,
     email: string,
     phoneNumber: string,
+}
+
+export interface StudentBody {
+    id: string,
+    name: string,
+    email: string,
+    class: string,
 }

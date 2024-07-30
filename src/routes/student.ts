@@ -1,14 +1,17 @@
 import { Router } from "express";
-import { getPendingAssignments, getCompletedAssignments, submitAssignment } from "../controllers/studentController";
+import { getPendingAssignments, getCompletedAssignments, submitAssignment, signInStudent, signUpStudent } from "../controllers/studentController";
+import studentMiddleware from "../config/studentMiddleware";
 
 const router = Router();
 
-// TODO: Add a student middleware
+router.post('/sign-up', studentMiddleware, signUpStudent);
 
-router.get("/pending-assignments", getPendingAssignments);
+router.post('/sign-in', studentMiddleware, signInStudent);
 
-router.get("/completed-assignments", getCompletedAssignments);
+router.get('/pending-assignments', studentMiddleware ,getPendingAssignments);
 
-router.post("/submit", submitAssignment);
+router.get('/completed-assignments', studentMiddleware, getCompletedAssignments);
+
+router.post('/submit-assignment', studentMiddleware, submitAssignment);
 
 export default router;

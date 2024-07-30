@@ -67,14 +67,14 @@ async function signUpTeacher(req: Request, res: Response) {
 
         const signUpBody: TeacherSignUpBody = req.body;
 
-        const teacher = await Teacher.findOne({
+        const existingTeacher = await Teacher.findOne({
             $or: [
                 { email: signUpBody.email },
                 { phoneNumber: signUpBody.phoneNumber }
             ]
         });
 
-        if (teacher) {
+        if (existingTeacher) {
             return res.status(409).json({
                 message: "Teacher already exists. Please sign in"
             });

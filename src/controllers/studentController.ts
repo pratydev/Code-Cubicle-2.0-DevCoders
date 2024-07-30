@@ -1,9 +1,111 @@
 import Student from "../models/Student";
 import { Request, Response } from "express";
-import { SubmissionBody, submissionSchema } from "../utils/types";
+import { StudentBody, StudentSignInBody, studentSignInSchema, StudentSignUpBody, studentSignUpSchema, SubmissionBody, submissionSchema } from "../utils/types";
 import Assignment from "../models/Assignment";
 import Submission from "../models/Submission";
 import Score from "../models/Score";
+import bcrypt from "bcrypt";
+import { generateStudentToken } from "../utils/utilFunctions";
+
+async function signUpStudent(req: Request, res: Response) {
+    try {
+        const response = studentSignUpSchema.safeParse(req.body);
+
+        if (!response.success) {
+            return res.status(411).json({
+                message: "Invalid student data"
+            });
+        }
+
+        const signUpBody: StudentSignUpBody = req.body;
+
+        const existingStudent = await Student.findOne({
+            email: signUpBody.email
+        });
+
+        if (existingStudent) {
+            return res.status(409).json({
+                message: "Student already exists"
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(signUpBody.password, 10);
+
+        const newStudent = await Student.create({
+            name: signUpBody.name,
+            email: signUpBody.email,
+            password: hashedPassword,
+            class: signUpBody.class
+        });
+
+        const returnData: StudentBody = {
+            id: newStudent.id,
+            name: newStudent.name,
+            email: newStudent.email,
+            class: newStudent.class,
+        };
+
+        return res.status(201).json({
+            message: "Student created successfully",
+            data: {
+                student: returnData
+            }
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal Server Error while creating student",
+        });
+    }
+}
+
+async function signInStudent(req: Request, res: Response){
+    try {
+        const response = studentSignInSchema.safeParse(req.body);
+
+        if (!response.success) {
+            return res.status(411).json({
+                message: "Invalid student credentials"
+            });
+        }
+
+        const signInBody: StudentSignInBody = req.body;
+
+        const existingStudent = await Student.findOne({
+            email: signInBody.email
+        });
+
+        if (!existingStudent) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        const passwordMatch = await bcrypt.compare(signInBody.password, existingStudent.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({
+                message: "Invalid password"
+            });
+        }
+
+        const token = generateStudentToken({
+            id: existingStudent.id,
+            email: existingStudent.email,
+            name: existingStudent.name,
+            class: existingStudent.class
+        });
+
+        return res.status(200).json({
+            message: "Student signed in successfully",
+            token
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal Server Error while signing in student",
+        });
+    }
+}
 
 async function getPendingAssignments(req: Request, res: Response) {
 
@@ -139,7 +241,7 @@ async function submitAssignment(req: Request, res: Response) {
                         score: question.marks
                     }
                 }
-            }, {new: true});
+            }, { new: true });
         }
 
 
@@ -167,4 +269,4 @@ async function submitAssignment(req: Request, res: Response) {
     }
 }
 
-export { getPendingAssignments, getCompletedAssignments, submitAssignment };
+export { getPendingAssignments, getCompletedAssignments, submitAssignment, signInStudent, signUpStudent };
