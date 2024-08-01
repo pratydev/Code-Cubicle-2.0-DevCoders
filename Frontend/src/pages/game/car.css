@@ -1,0 +1,259 @@
+.game-container {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    /* border: 2px solid #000; */
+    border-radius: 20px;
+    overflow: hidden;
+    /*background-color: #fff;*/
+}
+
+.road {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.lane {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.lane:nth-child(1) {
+    left: 0;
+}
+
+.lane:nth-child(2) {
+    left: 33.33%;
+}
+
+.lane:nth-child(3) {
+    left: 66.66%;
+}
+
+.lane-line {
+    position: absolute;
+    top: 100%;
+    height: 100%;
+    animation: moveDown 2s linear infinite;
+}
+
+.player {
+    position: absolute;
+    bottom: 10px;
+    width: 50px;
+    height: 100px;
+    transition: transform 0.2s;
+}
+
+.score-board {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+}
+
+.game-over {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 10px;
+}
+
+.obstacle {
+    position: absolute;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    padding: 1rem 1rem;
+    border-radius: 10px;
+    font-size: 24px;
+    animation: moveDown 5s linear forwards;
+}
+
+@keyframes moveDown {
+    from {
+        top: -500px;
+    }
+
+    to {
+        top: 500px;
+    }
+}
+
+
+/* Typography settings */
+
+html,
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga", "kern";
+    font-variant-numeric: proportional-nums;
+    overflow-x: hidden;
+}
+
+.card {
+    /* width: 328px; */
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    border-radius: 20px;
+    padding: 0 0;
+    /* padding: 32px 28px 64px; */
+}
+
+/* Scroll bar */
+
+.section-team::-webkit-scrollbar-thumb {
+    background: #FFFFFF;
+    border-radius: 80px;
+}
+
+.section-team::-webkit-scrollbar {
+    height: 6px;
+}
+
+/* Border gradient */
+
+.button-home,
+.button-home--services {
+    position: relative;
+    padding: 17px 34px;
+}
+
+.button-home--contact {
+    position: relative;
+    padding: 9px 18px;
+}
+
+.button-home::before,
+.button-home--contact::before,
+.button-home--services::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: linear-gradient(90deg, #FE00AE, #8E39C5) border-box;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+
+.button-home--contact::before {
+    border-radius: 8px;
+}
+
+.modal {
+    display: none;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Style for the overlay */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    z-index: 999;
+    /* Ensure the overlay is on top of other content */
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    backdrop-filter: blur(100px);
+    background-image: radial-gradient(circle, rgba(30, 4, 163, 0.2), rgba(23, 6, 109, 0.644));
+    padding: 2rem 1rem;
+    border-radius: 2rem;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid white;
+}
+
+.card-help-game {
+    width: 40%;
+    height: 50%;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.card-help-game-under {
+    border-radius: 2rem;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gestureButton {
+    z-index: 1;
+    position: absolute;
+    margin-top: 0.5rem;
+}
+
+
+.game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.player {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.obstacle {
+    position: absolute;
+    width: 177px;
+    height: 35px;
+    /* background: red; */
+    animation: moveDown 5s linear infinite;
+}
+
+@keyframes moveDown {
+    from {
+        top: -30px;
+    }
+    to {
+        top: 100%;
+    }
+}

@@ -1,0 +1,76 @@
+.sidebar {
+    width: 250px;
+    /* Set a specific width */
+    height: 100vh;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background-color: #575757;
+}
+
+.main-content {
+    flex-grow: 1;
+    /* padding: 20px; */
+    box-sizing: border-box;
+    height: 100vh;
+    margin-left: 250px;
+    /* Adjust margin based on sidebar width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar h3 {
+    padding-left: 40px;
+    margin-left: -50px;
+    margin-bottom: 10px;
+    border: 2px solid red;
+    border-radius: 2rem;
+}
+
+.card {
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    border-radius: 0 20px 20px 0;
+}
+
+/* Swiper */
+
+
+.card-help-game {
+    width: 60vw;
+    height: 70vh;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-image: radial-gradient(circle, rgba(123, 97, 255, .2), rgba(123, 97, 255, .05));
+    border-radius: 20px;
+    padding: 10px;
+}
