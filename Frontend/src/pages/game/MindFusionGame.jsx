@@ -12,7 +12,7 @@ import img10 from '../../assets/mathStoryImgs/2_10.png'
 
 import './mindfusiongame.css';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -24,15 +24,44 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules';
 
+
 function MindFusionGame() {
+
+    const [story, setStory] = useState([]);
+    const [storyTitle, setStoryTitle] = useState('Ancient');
+    let imgArray = story.images;
+    // imgArray.forEach(element => {
+    //     console.log(element);
+        
+    // });
+    console.log(imgArray);
+    
+    
+
+    const handlerLiClick = (title) => {
+        // const clickedTitle = event.target.innerText;
+        setStoryTitle(title);
+    };
+
+    useEffect(() => {
+        
+        let api = "http://localhost:8000/story/?title="+storyTitle;
+        
+        fetch(api)
+            .then(response => response.json())
+            .then(data => setStory(data.story))
+            .catch(error => console.error(error));
+    }, [storyTitle]);
+
     return (
         <>
-            <div className="sidebar">
+            <div className="sidebar card">
                 <h2>Assignment</h2>
                 <h3>Pending Assignment</h3>
                 <ul>
-                    <li>Math</li>
-                    
+                    <li onClick={() => (handlerLiClick("Ancient"))}>Math</li>
+                    <li onClick={() => (handlerLiClick("English"))}>Englis</li>
+
                 </ul>
 
                 <h3>Completed Assignment</h3>
@@ -41,27 +70,33 @@ function MindFusionGame() {
                 </ul>
             </div>
 
-            <div className="main-content" style={{ border: '2px solid red' }}>
-                <div class="card-help-game">
+            <div className="main-content">
+                <div className="card-help-game">
                     <div style={{ width: '100%', height: '100%', display: 'flex', borderRadius: '2rem' }}>
                         <Swiper
                             pagination={{
                                 type: 'fraction',
                             }}
                             navigation={true}
-                            modules={[Pagination, Navigation]}
+                            modules={[
+                                 Navigation]}
                             className="mySwiper"
                         >
-                            <SwiperSlide> <img src={img1} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img2} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img3} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img4} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img5} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img6} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img7} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img8} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img9} alt="" srcset="" /> </SwiperSlide>
-                            <SwiperSlide> <img src={img10} alt="" srcset="" /> </SwiperSlide>
+                            {imgArray && imgArray.map((element, index) => (
+                            <SwiperSlide key={index}> <img src={element} /> <p style={{zIndex: '1', position: 'absolute', bottom: '0', backgroundColor: 'black'}}> {story.text[index]} </p> </SwiperSlide>
+
+                            ))}
+                            
+                            {/* <SwiperSlide> <img src={img1} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img2} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img3} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img4} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img5} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img6} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img7} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img8} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img9} /> </SwiperSlide>
+                            <SwiperSlide> <img src={img10} /> </SwiperSlide> */}
 
                         </Swiper>
                     </div>
