@@ -32,11 +32,14 @@ function MindFusionGame() {
     const [loading, setLoading] = useState(true);
 
     let imgArray = story.images;
+    let audioArray = story.audio;
     // imgArray.forEach(element => {
     //     console.log(element);
 
     // });
     console.log(imgArray);
+    console.log(audioArray);
+
 
 
 
@@ -64,22 +67,20 @@ function MindFusionGame() {
                 <h2>Assignment</h2>
                 <h3>Pending Assignment</h3>
                 <ul>
-                    <li onClick={() => (handlerLiClick("Scientist"))}>Science</li>
-                    <li onClick={() => (handlerLiClick("English"))}>English</li>
+                    <li onClick={() => (handlerLiClick("Ancient"))}>Science</li>
                     <li onClick={() => (handlerLiClick("Env"))}>General Science</li>
-                    <li onClick={() => (handlerLiClick("Kingdom"))}>Englis</li>
 
                 </ul>
 
                 <h3>Completed Assignment</h3>
                 <ul>
-                    <li onClick={() => (handlerLiClick("MysticForest"))}>English</li>
+                    <li onClick={() => (handlerLiClick("English"))}>English</li>
 
                 </ul>
             </div>
 
             <div className="main-content">
-                <div className="card-help-game">
+                <div className="card-help-game" style={{ height: '80vh' }}>
                     <div style={{ width: '100%', height: '100%', display: 'flex', borderRadius: '2rem' }}>
                         {loading ?
                             <Swiper
@@ -94,17 +95,25 @@ function MindFusionGame() {
                                 {imgArray && imgArray.map((element, index) => (
 
                                     <SwiperSlide key={index}> <img src={element} />
-                                        <p style={{ zIndex: '1', position: 'absolute', bottom: '0', backgroundColor: 'black' }}>
-                                            {story.text[index]}
-                                        </p>
+                                        <div>
+
+                                            <p style={{ zIndex: '1', position: 'absolute', bottom: '3rem', backgroundColor: 'black' }}>
+                                                {story.text[index]}
+                                            </p>
+                                            <audio controls key={index} style={{ position: 'absolute', bottom: '0', right: '35%' }}>
+                                                <source src={audioArray[index]} type="audio/mp3" />
+                                                Your browser does not support the audio element.
+                                            </audio>
+                                        </div>
+
                                     </SwiperSlide>
 
                                 ))}
                             </Swiper> : <h2 style={{ zIndex: '4' }}>Loading</h2>}
+
+
                     </div>
-
                 </div>
-
             </div>
         </>
 
