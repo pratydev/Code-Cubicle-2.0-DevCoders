@@ -7,7 +7,7 @@ export default function AuthLayout({ children, authentication = true }) {
     const navigate = useNavigate();
     const [loader, setLoader] = useState(true);
     // const authStatus = useSelector(state => state.auth.status);
-    const authStatus = true; // Mock au b         thentication status for testing
+    const authStatus = true; // Mock authentication status for testing
 
     // Add a log to confirm component rendering
     console.log("AuthLayout component rendering");
