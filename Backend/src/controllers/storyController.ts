@@ -31,7 +31,13 @@ async function fetchStory(req: Request, res: Response){
 
         const story = await Story.findOne({title});
 
-        story?.populate("questions");
+        if(!story){
+            return res.status(404).json({
+                message: "Story not found",
+            });
+        }
+
+        await story.populate("questions");
 
         return res.status(200).json({
             message: "Story fetched successfully",
