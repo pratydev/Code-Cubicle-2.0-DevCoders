@@ -26,7 +26,7 @@ const storySchema = new mongoose.Schema({
     questions: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Question",
+            ref: 'Question',
             required: true
         }
     ]
