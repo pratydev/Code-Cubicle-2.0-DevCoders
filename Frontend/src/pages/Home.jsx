@@ -10,7 +10,7 @@ function Home() {
             <header className="header" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
                 <div style={{  padding: '1rem 2rem' , width: '100%', display: 'flex', justifyContent: "space-between", alignItems: 'center' }} className="navbar w-nav">
                     <div style={{  width: '500%' }}>
-                        <h1 >DevCoders</h1>
+                        <h1 >ULearn</h1>
                     </div>
                     <div style={{ display: 'flex', gap:'2rem' }}>
                         <a href="#start_game_section" class="button-home w-button" style={{ height: '60px' }}>
