@@ -42,7 +42,7 @@ const StudentsStatus = () => {
 
   return (
     <div className="app">
-      <div className="sidebar card-help">
+      <div className="sidebar " style={{width: '25rem'}}>
         <h2>Students</h2>
         <ul>
           {students.map(student => (
@@ -53,7 +53,7 @@ const StudentsStatus = () => {
           ))}
         </ul>
       </div>
-      <div className="main">
+      <div className="" style={{marginRight: '10rem'}}>
         {selectedStudent ? (
           <div className='card-help'>
             <h2>{selectedStudent.name}</h2>
@@ -62,7 +62,7 @@ const StudentsStatus = () => {
             <p>Class: {selectedStudent.class}</p> */}
             <BarChart
               xAxis={[{ scaleType: 'band', data: ['Math', 'English', 'Science'] }]}
-              series={[{ data: [selectedStudnt.math, selectedStudent.english, selectedStudent.science] }]}
+              series={[{ data: [selectedStudent.math, selectedStudent.english, selectedStudent.science] }]}
               width={400}
               height={300}
             />

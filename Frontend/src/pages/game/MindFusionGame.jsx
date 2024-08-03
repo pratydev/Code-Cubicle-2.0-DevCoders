@@ -12,7 +12,8 @@ import img10 from '../../assets/mathStoryImgs/2_10.png'
 
 import './mindfusiongame.css';
 
-import React, { useEffect, useRef, useState } from 'react';
+
+import React, { useEffect, useId, useRef, useState, } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -27,10 +28,15 @@ import { Pagination, Navigation } from 'swiper/modules';
 
 function MindFusionGame() {
 
+    const uniqueId = useId();
+
     const [story, setStory] = useState([]);
     const [storyTitle, setStoryTitle] = useState('Ancient');
     const [loading, setLoading] = useState(true);
 
+    const [questionIndex, setQuestionIndex] = useState(0);
+
+    let QuestionArray = story.questions;
     let imgArray = story.images;
     let audioArray = story.audio;
     // imgArray.forEach(element => {
@@ -88,15 +94,13 @@ function MindFusionGame() {
                                     type: 'fraction',
                                 }}
                                 navigation={true}
-                                modules={[
-                                    Navigation]}
+                                modules={[Navigation]}
                                 className="mySwiper"
                             >
                                 {imgArray && imgArray.map((element, index) => (
 
                                     <SwiperSlide key={index}> <img src={element} />
                                         <div>
-
                                             <p style={{ zIndex: '1', position: 'absolute', bottom: '3rem', backgroundColor: 'black' }}>
                                                 {story.text[index]}
                                             </p>
@@ -110,9 +114,19 @@ function MindFusionGame() {
 
                                 ))}
                             </Swiper> : <h2 style={{ zIndex: '4' }}>Loading</h2>}
-
-
                     </div>
+                </div>
+                <div className='questions-container card-help-game' style={{ border: '2px solid red' }} >
+
+                    {console.log("question array :: ", QuestionArray)}
+                    {console.log(QuestionArray && QuestionArray[0].question)}
+
+
+                    {<p>  {QuestionArray && QuestionArray[questionIndex].question} </p>}
+                    
+                    {/* {QuestionArray && QuestionArray[questionIndex].options.map((option, index)=>(
+                        <input type='radio' value={option} />
+                ))} */}
                 </div>
             </div>
         </>
