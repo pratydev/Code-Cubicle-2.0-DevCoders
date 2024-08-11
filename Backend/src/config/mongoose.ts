@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-mongoose.connect('mongodb+srv://jesipa9701:5Neg4LUZaGaywbXS@codecubicle.odcirfa.mongodb.net/');
-// mongoose.connect('mongodb://localhost:27017/codecubicle');
-
+if(process.env.CODECUBICLE_DB_URL){
+    mongoose.connect(process.env.CODECUBICLE_DB_URL);
+}
 
 const db = mongoose.connection;
 
